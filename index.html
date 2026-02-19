@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Finance Tracker</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header" role="banner">
+      <h1>Student Finance Tracker</h1>
+      <nav aria-label="Primary">
+        <ul class="nav-list">
+          <li><a href="#about">About</a></li>
+          <li><a href="#dashboard">Dashboard</a></li>
+          <li><a href="#records">Records</a></li>
+          <li><a href="#entry-form">Add / Edit</a></li>
+          <li><a href="#settings">Settings</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main id="main-content">
+      <section id="about" class="card">
+        <h2>About</h2>
+        <p>
+          Track spending with regex-powered validation/search, responsive layouts, and local persistence.
+        </p>
+        <p>
+          Contact: <a href="mailto:student@example.com">student@example.com</a> |
+          <a href="https://github.com/student" target="_blank" rel="noreferrer">GitHub</a>
+        </p>
+      </section>
+
+      <section id="dashboard" class="card" aria-labelledby="dashboard-heading">
+        <h2 id="dashboard-heading">Dashboard & Stats</h2>
+        <div class="stats-grid">
+          <article><h3>Total Records</h3><p id="stat-total">0</p></article>
+          <article><h3>Total Spend (<span id="base-currency-label">USD</span>)</h3><p id="stat-sum">0.00</p></article>
+          <article><h3>Top Category</h3><p id="stat-top-category">—</p></article>
+          <article><h3>Last 7 Days</h3><p id="stat-trend">0.00</p></article>
+        </div>
+        <div class="chart-wrap" aria-label="Last 7 days spending chart">
+          <div id="trend-chart" class="trend-chart"></div>
+        </div>
+        <p id="cap-live" class="live-message" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="records" class="card">
+        <h2>Records</h2>
+        <div class="controls">
+          <label>
+            Sort by
+            <select id="sort-key">
+              <option value="date_desc">Date (newest)</option>
+              <option value="date_asc">Date (oldest)</option>
+              <option value="description_asc">Description (A-Z)</option>
+              <option value="description_desc">Description (Z-A)</option>
+              <option value="amount_desc">Amount (high-low)</option>
+              <option value="amount_asc">Amount (low-high)</option>
+            </select>
+          </label>
+          <label>
+            Regex Search
+            <input id="search-input" type="text" placeholder="e.g. (coffee|tea)" />
+          </label>
+          <label class="inline-check">
+            <input id="search-case" type="checkbox" /> Case insensitive
+          </label>
+          <p id="search-feedback" role="status" aria-live="polite"></p>
+        </div>
+        <div class="table-wrap">
+          <table>
+            <caption class="sr-only">Transaction records table</caption>
+            <thead>
+              <tr>
+                <th>Description</th><th>Amount</th><th>Category</th><th>Date</th><th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="records-body"></tbody>
+          </table>
+        </div>
+        <div id="records-cards" class="records-cards"></div>
+      </section>
+
+      <section id="entry-form" class="card">
+        <h2>Add / Edit Transaction</h2>
+        <form id="record-form" novalidate>
+          <input id="record-id" type="hidden" />
+          <div class="field-grid">
+            <label for="description">Description</label>
+            <input id="description" name="description" required />
+
+            <label for="amount">Amount</label>
+            <input id="amount" name="amount" required inputmode="decimal" />
+
+            <label for="category">Category</label>
+            <input id="category" name="category" list="category-list" required />
+            <datalist id="category-list"></datalist>
+
+            <label for="date">Date</label>
+            <input id="date" name="date" placeholder="YYYY-MM-DD" required />
+          </div>
+          <p id="form-errors" role="alert" aria-live="assertive"></p>
+          <button type="submit">Save Record</button>
+          <button type="button" id="form-reset">Reset</button>
+        </form>
+      </section>
+
+      <section id="settings" class="card">
+        <h2>Settings</h2>
+        <div class="field-grid">
+          <label for="base-currency">Base Currency</label>
+          <select id="base-currency">
+            <option>USD</option>
+            <option>EUR</option>
+            <option>GBP</option>
+          </select>
+
+          <label for="rate-eur">EUR rate</label>
+          <input id="rate-eur" value="0.92" />
+
+          <label for="rate-gbp">GBP rate</label>
+          <input id="rate-gbp" value="0.79" />
+
+          <label for="cap-amount">Spending Cap</label>
+          <input id="cap-amount" placeholder="e.g. 500" />
+
+          <label for="categories">Categories (comma-separated)</label>
+          <input id="categories" />
+        </div>
+        <div class="settings-actions">
+          <button id="save-settings" type="button">Save Settings</button>
+          <button id="export-json" type="button">Export JSON</button>
+          <label class="file-input-label">Import JSON
+            <input id="import-json" type="file" accept="application/json" />
+          </label>
+          <a id="download-link" class="sr-only" aria-hidden="true">Download</a>
+        </div>
+        <p id="settings-feedback" role="status" aria-live="polite"></p>
+      </section>
+    </main>
+
+    <footer>
+      <small>Student Finance Tracker • Built with semantic HTML, CSS, and JavaScript modules.</small>
+    </footer>
+
+    <script type="module" src="scripts/main.js"></script>
+  </body>
+</html>

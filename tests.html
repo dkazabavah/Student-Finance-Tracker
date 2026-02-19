@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /><title>Regex Tests</title></head>
+<body>
+  <h1>Validator Assertions</h1>
+  <pre id="out"></pre>
+  <script type="module">
+    import { validateRecord, patterns } from './scripts/validators.js';
+    const out = document.getElementById('out');
+    const tests = [
+      ['description trim', validateRecord({description:' hello ',amount:'1',category:'Food',date:'2025-10-01'}).valid === false],
+      ['amount decimal', patterns.amount.test('99.95') === true],
+      ['date valid', patterns.date.test('2025-12-31') === true],
+      ['category hyphen', patterns.category.test('School Fees') === true],
+      ['duplicate word', patterns.duplicateWord.test('coffee coffee break') === true],
+    ];
+    out.textContent = tests.map(([name, pass]) => `${pass ? '✅' : '❌'} ${name}`).join('\n');
+  </script>
+</body>
+</html>
